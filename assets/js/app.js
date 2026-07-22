@@ -13,7 +13,7 @@ lucide.createIcons();
 
 /**
  * English: Renders the product grid based on category selection
- * Arabic: دالة لعرض المنتجات في الشبكة بناءً على الفئة المختارة
+ * Arabic: دالة لعرض المنتجات في الشبكة بناءً على الفئة المختارة مع عرض الصور الحقيقية
  * @param {string} filter - Category filter ('all', 'baby', 'kids', 'teens')
  */
 function renderProducts(filter = 'all') {
@@ -32,11 +32,15 @@ function renderProducts(filter = 'all') {
 
         const card = `
             <div class="product-card bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-                <div class="h-64 bg-gray-200 flex items-center justify-center relative">
-                    <!-- Placeholder for Image / مكان مخصص لصورة المنتج -->
-                    <div class="text-gray-400 text-sm p-4 text-center border-2 border-dashed border-gray-400 m-4 rounded w-full h-full flex items-center justify-center">
-                        ${product.image}
-                    </div>
+                <div class="h-64 bg-gray-50 flex items-center justify-center relative overflow-hidden">
+                    <!-- Product Image / صورة المنتج الحقيقية المضافة حديثاً -->
+                    ${product.image ? `
+                        <img src="${product.image}" alt="${product.name[currentLang]}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                    ` : `
+                        <div class="text-gray-400 text-sm p-4 text-center border-2 border-dashed border-gray-400 m-4 rounded w-full h-full flex items-center justify-center">
+                            No Image
+                        </div>
+                    `}
                 </div>
                 <div class="p-5">
                     <h3 class="text-lg font-bold text-gray-900 mb-1">${product.name[currentLang]}</h3>
@@ -72,8 +76,8 @@ function renderProducts(filter = 'all') {
  */
 
 /**
- * English: Adds selected product to the shopping cart
- * Arabic: دالة لإضافة منتج إلى سلة المشتريات بالمقاس واللون المحددين
+ * English: Adds selected product to the shopping cart and opens the cart drawer automatically
+ * Arabic: دالة لإضافة منتج إلى سلة المشتريات وفتح السلة تلقائياً لتقديم تغذية بصرية فورية للمستخدم
  * @param {number} productId
  */
 function addToCart(productId) {
@@ -91,6 +95,13 @@ function addToCart(productId) {
     }
 
     updateCartUI();
+
+    // Open cart drawer automatically for visual feedback if it is closed
+    // فتح السلة تلقائياً لإشعار المشتري بالإضافة وتسهيل تجربة الاستخدام
+    const modal = document.getElementById('cart-modal');
+    if (modal && modal.classList.contains('hidden')) {
+        toggleCart();
+    }
 }
 
 /**
@@ -139,10 +150,15 @@ function updateCartUI() {
         total += itemTotal;
         html += `
             <div class="flex items-center justify-between border-b pb-2">
-                <div class="flex-1">
-                    <h4 class="font-semibold text-sm">${item.name[currentLang]}</h4>
-                    <p class="text-xs text-gray-500">${t.size}: ${item.size} | ${t.color}: ${item.color}</p>
-                    <p class="text-sm font-bold text-rose-500">${item.price} ${t.currency} x ${item.qty}</p>
+                <div class="flex-1 flex items-center space-x-3 space-x-reverse">
+                    ${item.image ? `
+                        <img src="${item.image}" alt="${item.name[currentLang]}" class="w-12 h-12 object-cover rounded-md border border-gray-100 flex-shrink-0">
+                    ` : ''}
+                    <div>
+                        <h4 class="font-semibold text-sm">${item.name[currentLang]}</h4>
+                        <p class="text-xs text-gray-500">${t.size}: ${item.size} | ${t.color}: ${item.color}</p>
+                        <p class="text-sm font-bold text-rose-500">${item.price} ${t.currency} x ${item.qty}</p>
+                    </div>
                 </div>
                 <button onclick="removeFromCart(${index})" class="text-red-400 hover:text-red-600 p-2">
                     <i data-lucide="trash-2" class="w-4 h-4"></i>
@@ -160,30 +176,39 @@ function updateCartUI() {
 }
 
 /**
- * English: Toggles the shopping cart sidebar display
- * Arabic: دالة لفتح أو إغلاق سلة المشتريات مع دعم تحويل الاتجاهات للهواتف الذكية
+ * English: Toggles the shopping cart sidebar display with direction-independent slide
+ * Arabic: دالة لفتح أو إغلاق سلة المشتريات بسلاسة بالغة وتوافق تام دون مشاكل الاتجاهات أو الحاجة لتحديث الصفحة
+ * @param {boolean} isPopstate - Identifies if call was triggered by hardware back button
  */
-function toggleCart() {
+function toggleCart(isPopstate = false) {
     const modal = document.getElementById('cart-modal');
     const panel = document.getElementById('cart-panel');
     if (!modal || !panel) return;
 
     if (modal.classList.contains('hidden')) {
         modal.classList.remove('hidden');
-        setTimeout(() => panel.classList.remove('translate-x-full', 'translate-x-[-100%]'), 10);
-        // Handle mobile back button / تسيير زر الرجوع في الهواتف الذكية
-        window.history.pushState({cartOpen: true}, "");
+        // Smoothly slide in from the right edge
+        setTimeout(() => panel.classList.remove('translate-x-full'), 10);
+        // Track history state for mobile back button compatibility
+        if (!isPopstate) {
+            window.history.pushState({cartOpen: true}, "");
+        }
     } else {
-        panel.classList.add(document.dir === 'rtl' ? 'translate-x-full' : 'translate-x-[-100%]');
+        // Smoothly slide out to the right edge
+        panel.classList.add('translate-x-full');
         setTimeout(() => modal.classList.add('hidden'), 300);
+        // Correct history state if closed manually
+        if (!isPopstate && window.history.state && window.history.state.cartOpen) {
+            window.history.back();
+        }
     }
 }
 
-// Close cart on hardware back button (Mobile) / إغلاق السلة عند الضغط على زر الرجوع في الهواتف
+// Close cart on hardware back button (Mobile) / إغلاق السلة عند الضغط على زر الرجوع في الهواتف الذكية دون إعادة تحميل الصفحة
 window.addEventListener("popstate", function(e) {
     const modal = document.getElementById('cart-modal');
     if (modal && !modal.classList.contains('hidden')) {
-        toggleCart();
+        toggleCart(true);
     }
 });
 
@@ -193,7 +218,7 @@ window.addEventListener("popstate", function(e) {
 
 /**
  * English: Opens WhatsApp web/app with prefilled formatted cart content details
- * Arabic: دالة لتأكيد الطلب وتصدير السلة لرسالة منسقة في واتساب
+ * Arabic: دالة لتأكيد الطلب وتصدير السلة لرسالة منسقة في واتساب مع روابط صور حقيقية لإتاحة معاينة الصور داخل واتساب
  */
 function checkoutWhatsApp() {
     if (cart.length === 0) return;
@@ -201,14 +226,21 @@ function checkoutWhatsApp() {
     let total = 0;
     let message = currentLang === 'ar' ? "مرحباً، أود طلب المنتجات التالية:\n\n" : "Hello, I would like to order:\n\n";
 
+    // Construct real absolute URL base for image previews in WhatsApp
+    const origin = window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '');
+
     cart.forEach(item => {
         total += (item.price * item.qty);
+        const imageUrl = item.image ? `${origin}/${item.image}` : '';
         message += `🛍️ ${item.name[currentLang]}\n`;
         message += `   - المقاس/Size: ${item.size}\n`;
         message += `   - اللون/Color: ${item.color}\n`;
         message += `   - الكمية/Qty: ${item.qty}\n`;
         message += `   - السعر/Price: ${item.price}\n`;
-        message += `   - الصورة/Image: ${item.image}\n\n`; // Link to image enables WhatsApp preview
+        if (imageUrl) {
+            message += `   - الصورة/Image: ${imageUrl}\n`; // Link to image enables WhatsApp preview
+        }
+        message += `\n`;
     });
 
     message += `=================\n`;
@@ -223,8 +255,8 @@ function checkoutWhatsApp() {
  */
 
 /**
- * English: Changes the language of the application (RTL for Arabic, LTR for English/French)
- * Arabic: دالة لتغيير لغة المتجر بالكامل وتحديث النصوص والاتجاهات (RTL/LTR)
+ * English: Changes the language of the application while preserving the current active filter selection
+ * Arabic: دالة لتغيير لغة المتجر بالكامل وتحديث النصوص والاتجاهات (RTL/LTR) مع الحفاظ على الفلترة النشطة حالياً لتجنب إعادة ضبط المعطيات
  * @param {string} lang
  */
 function changeLanguage(lang) {
@@ -258,17 +290,19 @@ function changeLanguage(lang) {
     if (totalText) totalText.innerText = t.total;
     if (checkoutBtnText) checkoutBtnText.innerText = t.checkout;
 
-    // Re-render / إعادة عرض المنتجات وتحديث السلة
-    renderProducts('all');
+    // Re-render using active filter / إعادة عرض المنتجات بناءً على الفلترة المفعلة حالياً دون إعادة تحميل الصفحة كاملة
+    renderProducts(currentFilter);
     updateCartUI();
 }
 
 /**
- * English: Filters displayed products on screen by category
- * Arabic: دالة لفلترة المنتجات حسب الفئات المختارة
+ * English: Filters displayed products on screen by category and tracks it globally
+ * Arabic: دالة لفلترة المنتجات حسب الفئات المختارة وتتبع حالة الفلترة المحددة لتأمين تنقل سلس بدون ريفريش
  * @param {string} category
  */
 function filterProducts(category) {
+    currentFilter = category; // Record category state
+
     // Update UI buttons / تحديث مظهر أزرار الفلترة النشطة
     document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.classList.remove('bg-rose-500', 'text-white');

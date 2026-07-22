@@ -24,7 +24,7 @@ const products = [
         },
         category: "kids",
         price: 3500,
-        image: "",
+        image: "assets/images/milano_set.jpg",
         colors: ["أزرق", "أخضر"],
         sizes: ["2Y", "4Y", "6Y"]
     },
@@ -37,7 +37,7 @@ const products = [
         },
         category: "teens",
         price: 4200,
-        image: "",
+        image: "assets/images/floral_dress.jpg",
         colors: ["وردي", "أبيض"],
         sizes: ["8Y", "10Y", "12Y", "14Y"]
     },
@@ -50,7 +50,7 @@ const products = [
         },
         category: "baby",
         price: 2800,
-        image: "",
+        image: "assets/images/baby_romper.jpg",
         colors: ["أصفر", "رمادي"],
         sizes: ["3M", "6M", "12M", "24M"]
     },
@@ -63,7 +63,7 @@ const products = [
         },
         category: "teens",
         price: 1500,
-        image: "",
+        image: "assets/images/tiger_tshirt.jpg",
         colors: ["أسود", "أبيض"],
         sizes: ["10Y", "12Y", "16Y"]
     }
@@ -130,3 +130,4 @@ const translations = {
  */
 let currentLang = 'ar';
 let cart = [];
+let currentFilter = 'all'; // Keep track of current category filter

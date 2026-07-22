@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Standard SEO Tags / تحسين محركات البحث الأساسية -->
+    <title>WM Kids Boutique | متجر ملابس الأطفال الأنيقة في الجزائر</title>
+    <meta name="description" content="متجر إلكتروني متكامل لبيع ملابس الأطفال (من 3 أشهر إلى 16 سنة). تصفح تشكيلة الصيف الجديدة للأطفال بجودة عالية وأسعار ممتازة مع خدمة الشحن والدفع عند الاستلام. اطلب الآن مباشرة عبر الواتساب.">
+    <meta name="keywords" content="WM Kids, ملابس أطفال, متجر ملابس أطفال, ملابس صيف للأطفال, ملابس رضع, ملابس مراهقين, متجر ملابس الجزائر, بوتيك أطفال">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://wm-kids-boutique.vercel.app/">
+
+    <!-- Open Graph (OG) Tags / بطاقات فيسبوك وشبكات التواصل الاجتماعي -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="WM Kids Boutique - تشكيلة ملابس الأطفال الصيفية">
+    <meta property="og:description" content="أحدث صيحات الموضة للأطفال من عمر 3 أشهر إلى 16 سنة. جودة وأناقة مع ميزة سلة المشتريات والطلب السريع عبر الواتساب.">
+    <meta property="og:image" content="https://wm-kids-boutique.vercel.app/assets/images/og-image.jpg">
+    <meta property="og:url" content="https://wm-kids-boutique.vercel.app/">
+    <meta property="og:site_name" content="WM Kids Boutique">
+
+    <!-- Twitter Card Tags / بطاقات تويتر -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="WM Kids Boutique - تشكيلة ملابس الأطفال الصيفية">
+    <meta name="twitter:description" content="أحدث صيحات الموضة للأطفال من عمر 3 أشهر إلى 16 سنة. جودة وأناقة مع ميزة سلة المشتريات والطلب السريع عبر الواتساب.">
+    <meta name="twitter:image" content="https://wm-kids-boutique.vercel.app/assets/images/og-image.jpg">
+
+    <!-- Structured Data (JSON-LD) Skeleton / البيانات المهيكلة لمحركات البحث -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Store",
+      "name": "WM Kids Boutique",
+      "description": "متجر إلكتروني متكامل مخصص لبيع ملابس الأطفال (من 3 أشهر إلى 16 سنة) في الجزائر.",
+      "url": "https://wm-kids-boutique.vercel.app/",
+      "telephone": "+213562163900",
+      "priceRange": "$$",
+      "image": "https://wm-kids-boutique.vercel.app/assets/images/og-image.jpg",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "DZ"
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://wm-kids-boutique.vercel.app/?search={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
+    <!-- Tailwind CSS for styling / تصميم الموقع -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Lucide Icons for UI elements / أيقونات الموقع -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- External CSS / ملف التنسيق الخارجي -->
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="text-slate-800">
+
+    <!-- ==========================================
+         NAVIGATION BAR / شريط التنقل العلوي
+         ========================================== -->
+    <nav class="glass-nav fixed w-full top-0 z-50 border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo / الشعار -->
+                <div class="flex-shrink-0 flex items-center cursor-pointer">
+                    <span class="text-2xl font-bold text-rose-500">WM Kids</span>
+                </div>
+
+                <!-- Actions (Language, Cart) / الأزرار -->
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <!-- Language Selector / مغير اللغة -->
+                    <select id="lang-selector" onchange="changeLanguage(this.value)" class="bg-transparent border border-gray-300 rounded-md py-1 px-2 text-sm focus:outline-none focus:ring-2 focus:ring-rose-500">
+                        <option value="ar">العربية</option>
+                        <option value="en">English</option>
+                        <option value="fr">Français</option>
+                    </select>
+
+                    <!-- Cart Button / زر السلة -->
+                    <button onclick="toggleCart()" class="relative p-2 text-gray-600 hover:text-rose-500 transition">
+                        <i data-lucide="shopping-cart"></i>
+                        <span id="cart-count" class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-rose-500 rounded-full">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ==========================================
+         HERO SECTION / القسم الرئيسي
+         ========================================== -->
+    <header class="pt-24 pb-12 bg-rose-50 text-center">
+        <div class="max-w-4xl mx-auto px-4">
+            <h1 id="hero-title" class="text-4xl md:text-5xl font-bold text-slate-900 mb-4">تشكيلة الصيف الجديدة للأطفال</h1>
+            <p id="hero-subtitle" class="text-lg text-slate-600 mb-8">أحدث صيحات الموضة من 3 أشهر إلى 16 سنة - جودة وأناقة</p>
+
+            <!-- Filters / الفلاتر -->
+            <div class="flex flex-wrap justify-center gap-2 mb-8">
+                <button onclick="filterProducts('all')" class="filter-btn active bg-rose-500 text-white px-4 py-2 rounded-full text-sm shadow-md" id="filter-all">الكل</button>
+                <button onclick="filterProducts('baby')" class="filter-btn bg-white text-slate-700 hover:bg-rose-100 px-4 py-2 rounded-full text-sm shadow-sm" id="filter-baby">3 - 24 شهر</button>
+                <button onclick="filterProducts('kids')" class="filter-btn bg-white text-slate-700 hover:bg-rose-100 px-4 py-2 rounded-full text-sm shadow-sm" id="filter-kids">2 - 6 سنوات</button>
+                <button onclick="filterProducts('teens')" class="filter-btn bg-white text-slate-700 hover:bg-rose-100 px-4 py-2 rounded-full text-sm shadow-sm" id="filter-teens">8 - 16 سنة</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==========================================
+         PRODUCTS GRID / شبكة المنتجات
+         ========================================== -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div id="products-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <!-- Products will be injected here via JavaScript / سيتم حقن المنتجات هنا -->
+        </div>
+    </main>
+
+    <!-- ==========================================
+         SHOPPING CART MODAL / نافذة السلة
+         ========================================== -->
+    <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex justify-end">
+        <div class="bg-white w-full max-w-md h-full shadow-2xl flex flex-col transform transition-transform duration-300 translate-x-full" id="cart-panel">
+
+            <!-- Cart Header -->
+            <div class="p-4 border-b flex justify-between items-center bg-gray-50">
+                <h2 id="cart-title" class="text-xl font-bold">سلة المشتريات</h2>
+                <button onclick="toggleCart()" class="text-gray-500 hover:text-red-500">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+
+            <!-- Cart Items -->
+            <div id="cart-items" class="flex-1 overflow-y-auto p-4 space-y-4">
+                <!-- Cart items will appear here -->
+                <p id="empty-cart-msg" class="text-center text-gray-500 mt-10">السلة فارغة حالياً</p>
+            </div>
+
+            <!-- Cart Footer (Checkout) -->
+            <div class="p-4 border-t bg-gray-50">
+                <div class="flex justify-between items-center mb-4">
+                    <span id="total-text" class="font-semibold text-lg">المجموع:</span>
+                    <span id="cart-total" class="font-bold text-xl text-rose-600">0 د.ج</span>
+                </div>
+                <button onclick="checkoutWhatsApp()" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center space-x-2 space-x-reverse transition shadow-lg">
+                    <i data-lucide="message-circle"></i>
+                    <span id="checkout-btn-text">تأكيد الطلب عبر واتساب</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         EXTERNAL JAVASCRIPT LOGIC / الكود البرمجي الخارجي
+         ========================================== -->
+    <script src="assets/js/data.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+</html>

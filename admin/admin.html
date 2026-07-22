@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة الإدارة | WM Kids Boutique</title>
+
+    <!-- Tailwind CSS / تصميم واجهة لوحة الإدارة -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Cairo', sans-serif; background-color: #f1f5f9; }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen text-slate-800">
+
+    <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md border border-slate-100">
+        <!-- Header / ترويسة لوحة الإدارة -->
+        <div class="text-center mb-8">
+            <span class="text-3xl font-bold text-rose-500">WM Kids</span>
+            <h1 class="text-xl font-bold text-slate-800 mt-2">لوحة الإدارة - تسجيل الدخول</h1>
+            <p class="text-sm text-slate-500 mt-1">الرجاء إدخال بيانات الاعتماد للوصول إلى لوحة التحكم</p>
+        </div>
+
+        <!-- Login Form / نموذج تسجيل الدخول -->
+        <form id="admin-login-form" onsubmit="handleLogin(event)" class="space-y-6">
+            <div>
+                <label for="email" class="block text-sm font-semibold text-slate-700 mb-2">البريد الإلكتروني</label>
+                <input type="email" id="email" required placeholder="admin@wmkids.com" class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500 transition text-right">
+            </div>
+
+            <div>
+                <label for="password" class="block text-sm font-semibold text-slate-700 mb-2">كلمة المرور</label>
+                <input type="password" id="password" required placeholder="••••••••" class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500 transition text-right">
+            </div>
+
+            <button type="submit" class="w-full bg-rose-500 hover:bg-rose-600 text-white font-bold py-3 px-4 rounded-lg transition shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 duration-150">
+                تسجيل الدخول
+            </button>
+        </form>
+
+        <!-- Footer Info / تذييل الصفحة -->
+        <div class="mt-6 text-center text-xs text-slate-400">
+            <p>&copy; 2024 WM Kids Boutique. جميع الحقوق محفوظة.</p>
+        </div>
+    </div>
+
+    <script>
+        /**
+         * ==========================================================================
+         * FUTURE API INTEGRATION POINTS (NODE.JS / SUPABASE)
+         * نقاط ربط واجهة برمجة التطبيقات المستقبلية (Node.js أو Supabase)
+         * ==========================================================================
+         */
+
+        /**
+         * Arabic:
+         * دالة للتعامل مع تسجيل الدخول وإرسال البيانات للتحقق.
+         * هنا سيتم دمج مكالمات API مستقبلاً مع Supabase أو خادم Node.js الخاص بك.
+         *
+         * خطوات الربط مع Supabase (مثال):
+         * 1. استيراد مكتبة Supabase JS:
+         *    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"><\/script>
+         * 2. تهيئة عميل Supabase:
+         *    const supabase = supabase.createClient('SUPABASE_URL', 'SUPABASE_ANON_KEY');
+         * 3. استدعاء دالة تسجيل الدخول:
+         *    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+         *
+         * خطوات الربط مع خادم Node.js / Express (مثال):
+         * 1. استخدام Fetch API لإرسال طلب POST إلى مسار تسجيل الدخول:
+         *    const response = await fetch('https://api.wmkids.com/auth/login', {
+         *        method: 'POST',
+         *        headers: { 'Content-Type': 'application/json' },
+         *        body: JSON.stringify({ email, password })
+         *    });
+         * 2. تخزين رمز الوصول JWT Token في LocalStorage أو كـ Secure Cookie.
+         * 3. إعادة توجيه المستخدم إلى لوحة التحكم admin-dashboard.html.
+         *
+         * English:
+         * Function to handle login form submission.
+         * This is where future API integrations with Supabase or your Node.js backend will be made.
+         *
+         * Integration steps with Supabase (Example):
+         * 1. Import Supabase JS Library:
+         *    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"><\/script>
+         * 2. Initialize Supabase Client:
+         *    const supabase = supabase.createClient('SUPABASE_URL', 'SUPABASE_ANON_KEY');
+         * 3. Call Auth Sign-In:
+         *    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+         *
+         * Integration steps with Node.js / Express Backend (Example):
+         * 1. Use Fetch API to send a POST request to login route:
+         *    const response = await fetch('https://api.wmkids.com/auth/login', {
+         *        method: 'POST',
+         *        headers: { 'Content-Type': 'application/json' },
+         *        body: JSON.stringify({ email, password })
+         *    });
+         * 2. Store returned JWT Token in LocalStorage or secure HTTP-only cookies.
+         * 3. Redirect the authorized user to the dashboard view (e.g., admin-dashboard.html).
+         */
+        async function handleLogin(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            console.log('Attempting login with:', email);
+
+            // Placeholder logic / كود مؤقت لإظهار محاكاة تسجيل الدخول الناجح
+            if (email === 'admin@wmkids.com' && password === 'admin123') {
+                alert('تم تسجيل الدخول بنجاح! (محاكاة)');
+                // Here, you would redirect to the admin dashboard
+                // هنا سيتم التوجيه إلى صفحة لوحة التحكم الرئيسية
+            } else {
+                alert('خطأ في البريد الإلكتروني أو كلمة المرور!');
+            }
+        }
+    </script>
+</body>
+</html>

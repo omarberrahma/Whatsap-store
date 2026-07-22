@@ -126,14 +126,12 @@ function updateCartUI() {
     }
 
     const cartItemsContainer = document.getElementById('cart-items');
-    const emptyMsg = document.getElementById('empty-cart-msg');
-
-    if (!cartItemsContainer || !emptyMsg) return;
+    if (!cartItemsContainer) return;
 
     if (cart.length === 0) {
-        cartItemsContainer.innerHTML = '';
-        cartItemsContainer.appendChild(emptyMsg);
-        emptyMsg.style.display = 'block';
+        cartItemsContainer.innerHTML = `
+            <p id="empty-cart-msg" class="text-center text-gray-500 mt-10">${t.emptyCart}</p>
+        `;
         const cartTotalElement = document.getElementById('cart-total');
         if (cartTotalElement) {
             cartTotalElement.innerText = `0 ${t.currency}`;
@@ -141,7 +139,6 @@ function updateCartUI() {
         return;
     }
 
-    emptyMsg.style.display = 'none';
     let html = '';
     let total = 0;
 
